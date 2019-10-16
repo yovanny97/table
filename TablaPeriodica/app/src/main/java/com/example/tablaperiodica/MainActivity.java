@@ -4,22 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     RadioButton rbazul,rbrojo,rbverde;
     CheckBox cbSimbolo,cbnum,cbmasa,cbgrupo;
     Button btn;
-    ListView list;
+    Spinner list;
     String Nombre,Simbolo,NumeroA,Masa,Grupo;
     ArrayList<String> elementList = new ArrayList<String>();
 
@@ -39,9 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
         btn=(Button)findViewById(R.id.button);
 
-        list=(ListView)findViewById(R.id.lista);
+        list=(Spinner) findViewById(R.id.lista);
+
 
         leerArchivo();
+
+        list.setOnItemSelectedListener(this);
 
     }
 
@@ -69,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Elements",l);
             }
 
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,elementList);
+            ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_item,elementList);
             list.setAdapter(arrayAdapter);
 
 
@@ -77,5 +84,24 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
 
         }
+    }
+
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Nombre  = elementList.get(i);
+
+        Toast.makeText(getApplicationContext(),Nombre,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
